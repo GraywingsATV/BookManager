@@ -3,6 +3,9 @@
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
+// fix, so we can use migrate command from local console
+$db['dsn'] = 'mysql:host=127.0.0.1;port=33060;dbname=db';
+
 $config = [
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),
