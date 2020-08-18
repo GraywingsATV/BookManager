@@ -36,15 +36,13 @@ AppAsset::register($this);
         ],
     ]);
 
-    $items = [
-        ['label' => 'Главная', 'url' => ['/site/index']],
-    ];
-
     if(Yii::$app->user->isGuest) {
         $items[] = ['label' => 'Регистрация', 'url' => ['/site/register']];
         $items[] = ['label' => 'Вход', 'url' => ['/site/login']];
     }
     else {
+        $items[] = ['label' => 'Книги', 'url' => ['/books/index']];
+        $items[] = ['label' => 'Личный кабинет', 'url' => ['/account/index']];
         $items[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

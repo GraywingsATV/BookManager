@@ -2,13 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\RegistrationForm;
+use app\models\forms\RegistrationForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
+use app\models\forms\LoginForm;
 
 class SiteController extends Controller
 {
@@ -46,11 +46,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+            ]
         ];
     }
 
@@ -61,7 +57,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return Yii::$app->user->isGuest ? $this->render('index') : $this->redirect(['/books/index']);
     }
 
     /**
@@ -101,11 +97,9 @@ class SiteController extends Controller
                 $login->password = $model->password;
                 $login->rememberMe = true;
                 $login->login();
-
-
             }
         }
-        elseif(!Yii::$app->user->isGuest) {
+        if(!Yii::$app->user->isGuest) {
             return $this->redirect(['account/index']);
         }
 
