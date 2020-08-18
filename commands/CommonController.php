@@ -1,33 +1,28 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
 namespace app\commands;
 
+use app\models\Book;
 use yii\console\Controller;
 use yii\console\ExitCode;
+use Faker\Factory;
 
-/**
- * This command echoes the first argument that you have entered.
- *
- * This command is provided as an example for you to learn how to create console commands.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
-class HelloController extends Controller
+
+class CommonController extends Controller
 {
     /**
      * This command echoes what you have entered as the message.
-     * @param string $message the message to be echoed.
+     * @param integer $number the message to be echoed.
      * @return int Exit code
      */
-    public function actionIndex($message = 'hello world')
+    public function actionCreateBooks($number)
     {
-        echo $message . "\n";
+        $faker = Factory::create();
+        for($count = 0; $count < $number; $count++) {
+            $book = new Book();
+            $book->title = $faker->text(rand(10, 25));
+            $book->save();
+        }
 
         return ExitCode::OK;
     }
