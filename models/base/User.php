@@ -11,10 +11,13 @@ use Yii;
  * @property string $username Логин
  * @property string $auth_key
  * @property string $password_hash
- * @property int $created_at
- * @property int $updated_at
+ * @property int|null $created_at
+ * @property int|null $updated_at
+ *
+ * @property Notify[] $notifies
+ * @property Reserve[] $reserves
  */
-class UserBase extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -30,7 +33,7 @@ class UserBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'created_at', 'updated_at'], 'required'],
+            [['username', 'auth_key', 'password_hash'], 'required'],
             [['created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
@@ -51,5 +54,25 @@ class UserBase extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * Gets query for [[Notifies]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotifies()
+    {
+        return $this->hasMany(Notify::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Reserves]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReserves()
+    {
+        return $this->hasMany(Reserve::className(), ['user_id' => 'id']);
     }
 }

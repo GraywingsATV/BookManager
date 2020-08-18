@@ -14,7 +14,7 @@ class m200816_173516_Create_book_table extends Migration
     {
         $this->createTable('book', [
             'id' => $this->primaryKey(),
-            'title' => $this->string()->comment('Название книги'),
+            'title' => $this->string()->notNull()->comment('Название книги'),
         ]);
     }
 

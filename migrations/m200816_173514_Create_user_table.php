@@ -17,8 +17,8 @@ class m200816_173514_Create_user_table extends Migration
             'username' => $this->string()->notNull()->unique()->comment('Логин'),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ]);
     }
 
