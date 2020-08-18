@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use app\models\base\UserBase;
+use app\models\base\User as UserBase;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -39,6 +39,7 @@ class User extends UserBase implements \yii\web\IdentityInterface
         return [
             [['username', 'password'], 'string'],
             [['username', 'password'], 'required'],
+            ['username', 'unique']
         ];
     }
 
